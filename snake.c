@@ -1,5 +1,6 @@
 #include "deque.h"
 #include "timer.h"
+#include <locale.h>
 #include <math.h>
 #include <ncurses/curses.h>
 #include <stdbool.h>
@@ -659,6 +660,7 @@ void snakecontroller_loop(SnakeController *controller) {
 
 int main(int argc, char *argv[]) {
     srand(time(NULL));
+    setlocale(LC_ALL, "");
 
     initscr();
     cbreak();
@@ -668,7 +670,7 @@ int main(int argc, char *argv[]) {
 
     if (has_colors() == FALSE) {
         endwin();
-        fprintf(stderr, "Your terminal does not support color\n");
+        printf("Your terminal does not support color\n");
         exit(1);
     }
 
