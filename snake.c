@@ -294,9 +294,7 @@ SnakeView *snakeview_new(int nlines, int ncols, int begin_y, int begin_x) {
 
     wattroff(view->border, COLOR_PAIR(PAIR_BORDER));
 
-    wnoutrefresh(view->border);
-    wnoutrefresh(view->win);
-    doupdate();
+    wrefresh(view->border);
 
     return view;
 }
@@ -382,13 +380,7 @@ InfoView *infoview_new(int nlines, int score_ncols, int speed_ncols,
 
     wattroff(info->border, COLOR_PAIR(PAIR_BORDER));
 
-    wnoutrefresh(info->border);
-    wnoutrefresh(info->win);
-    wnoutrefresh(info->score_win);
-    wnoutrefresh(info->speed_win);
-    wnoutrefresh(info->continues_win);
-    wnoutrefresh(info->time_win);
-    doupdate();
+    wrefresh(info->border);
 
     return info;
 }
@@ -418,11 +410,7 @@ void infoview_update_info(InfoView *info, int score, int max_score,
     mvwprintw(info->continues_win, 0, 0, "Continues: %d", continues);
     mvwprintw(info->time_win, 0, 0, "%02d:%02d", minutes, secs);
 
-    wnoutrefresh(info->score_win);
-    wnoutrefresh(info->speed_win);
-    wnoutrefresh(info->continues_win);
-    wnoutrefresh(info->time_win);
-    doupdate();
+    wrefresh(info->win);
 }
 
 typedef struct SnakeController {
@@ -510,9 +498,7 @@ void snakecontroller_end_loop(SnakeController *controller) {
     }
     wprintw(end_win, " <r to restart>\n");
     box(end_border, 0, 0);
-    wnoutrefresh(end_border);
-    wnoutrefresh(end_win);
-    doupdate();
+    wrefresh(end_border);
 
     int ch;
     int nlines = controller->model->nlines;
@@ -574,9 +560,7 @@ void snakecontroller_help_loop(SnakeController *controller) {
     wprintw(help_win, " <h to show help / pause>\n");
     wprintw(help_win, " <F1 to quit>\n");
     box(help_border, 0, 0);
-    wnoutrefresh(help_border);
-    wnoutrefresh(help_win);
-    doupdate();
+    wrefresh(help_border);
 
     int ch;
     while ((ch = getch()) != KEY_F(1)) {
